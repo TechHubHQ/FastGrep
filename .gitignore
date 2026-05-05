@@ -1,0 +1,88 @@
+# ===============================
+# Go build artifacts
+# ===============================
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Binaries (commonly used for CLI apps)
+bin/
+dist/
+build/
+
+# ===============================
+# Go workspace & cache
+# ===============================
+vendor/
+
+# Go workspace file (Go 1.18+)
+go.work
+go.work.sum
+
+.gocache/
+
+# ===============================
+# Dependency & tooling files
+# ===============================
+# Go coverage reports
+coverage.out
+coverage.txt
+coverage/
+
+# Profiling output
+*.prof
+*.pprof
+
+# ===============================
+# Logs & runtime files
+# ===============================
+*.log
+tmp/
+temp/
+
+# CLI config or runtime-generated files
+*.pid
+
+# ===============================
+# Environment & secrets
+# ===============================
+.env
+.env.*
+!.env.example
+
+# ===============================
+# OS-specific files
+# ===============================
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# ===============================
+# IDE & editor files
+# ===============================
+# VS Code
+.vscode/
+
+# GoLand / IntelliJ
+.idea/
+*.iml
+
+# Vim
+*.swp
+*.swo
+
+# ===============================
+# Testing & reports
+# ===============================
+test-results/
+reports/
