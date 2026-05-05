@@ -94,13 +94,13 @@ FastGrep uses a **producer-consumer model** with two levels of worker pools to m
 ┌──────────────────┐
 │ File Worker Pool │  N workers (min of file count, CPU cores)
 │  ┌────┐ ┌────┐   │
-│  │ FW │ │ FW │…  │  Each reads a file in 1 MB chunks
+│  │ FW │ │ FW │   │  Each reads a file in 1 MB chunks
 │  └──┬─┘ └──┬─┘   │
-└─────┼───────┼────┘
-      │       │  dispatches search jobs
-      ▼       ▼
+└─────┼──────┼─────┘
+      │      │  dispatches search jobs
+      ▼      ▼
 ┌──────────────────┐
-│ Chunk Worker Pool│  N workers (CPU core count)
+│Chunk Worker Pool │  N workers (CPU core count)
 │  ┌────┐ ┌────┐   │
 │  │ CW │ │ CW │   │  Each searches a chunk for the pattern
 │  └──┬─┘ └──┬─┘   │
