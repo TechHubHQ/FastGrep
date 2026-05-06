@@ -70,15 +70,14 @@ func BenchmarkFindMatches(b *testing.B) {
 	searchString := "content"
 	resChan := make(chan *Match, 1000)
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		sj := NewSearchJob("bench.txt", searchString, data, 1, false, resChan)
 		go func() {
 			sj.FindMatches()
 		}()
 
 		// Drain results
-		for j := 0; j < 1000; j++ {
+		for range 1000 {
 			<-resChan
 		}
 	}
@@ -100,7 +99,7 @@ func BenchmarkFindMatchesLargeChunk(b *testing.B) {
 		}()
 
 		// Drain results
-		for j := 0; j < numLines; j++ {
+		for range numLines {
 			<-resChan
 		}
 	}

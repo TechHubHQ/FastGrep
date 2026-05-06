@@ -26,7 +26,7 @@ func createLargeTestFile(t testing.TB, sizeMB int) string {
 }
 
 func BenchmarkEndToEnd(b *testing.B) {
-	// Create a 50MB file
+	// Create a 50-MB file
 	filePath := createLargeTestFile(b, 50)
 	searchString := "SearchPattern"
 
@@ -39,8 +39,7 @@ func BenchmarkEndToEnd(b *testing.B) {
 		devNull.Close()
 	}()
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		err := orchestrator.Execute(searchString, []string{filePath}, false, false)
 		if err != nil {
 			b.Fatalf("Execute failed: %v", err)
@@ -52,12 +51,12 @@ func BenchmarkEndToEndMultipleFiles(b *testing.B) {
 	// Create 5 files of 10MB each
 	var filePaths []string
 	tmpDir := b.TempDir()
-	for i := 0; i < 5; i++ {
+	for i := range 5 {
 		filePath := filepath.Join(tmpDir, fmt.Sprintf("file_%d.txt", i))
 		f, _ := os.Create(filePath)
 		line := "This is a test line for multi-file search. SearchPattern is here.\n"
 		iterations := (10 * 1024 * 1024) / len(line)
-		for j := 0; j < iterations; j++ {
+		for range iterations {
 			f.WriteString(line)
 		}
 		f.Close()
