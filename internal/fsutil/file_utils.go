@@ -1,6 +1,7 @@
 package fsutil
 
 import (
+	"fastgrep/internal/config"
 	"fmt"
 	"io/fs"
 	"os"
@@ -40,20 +41,28 @@ func FilterFiles(files []string, recursive bool) (int, []string) {
 		}
 
 		if fileInfo.IsDir() {
+			if config.IsExcludedDir(file) {
+				continue
+			}
 			if recursive {
 				err := filepath.WalkDir(file, func(path string, d fs.DirEntry, err error) error {
 					if err != nil {
 						return err
 					}
 
-					if !d.IsDir() {
-						// Skip binary executables even in subdirectories
-						if filepath.Ext(path) == ".exe" {
-							return nil
+					if d.IsDir() {
+						if config.IsExcludedDir(path) {
+							return filepath.SkipDir
 						}
-						validFiles = append(validFiles, path)
-						numValidFiles++
+						return nil
 					}
+
+					// Skip binary executables even in subdirectories
+					if filepath.Ext(path) == ".exe" {
+						return nil
+					}
+					validFiles = append(validFiles, path)
+					numValidFiles++
 					return nil
 				})
 				if err != nil {

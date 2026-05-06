@@ -91,7 +91,6 @@ func BenchmarkFindMatchesLargeChunk(b *testing.B) {
 	numLines := len(data) / len(line)
 	resChan := make(chan *Match, numLines+1)
 
-
 	for b.Loop() {
 		sj := NewSearchJob("bench.txt", searchString, data, 1, false, resChan)
 		go func() {

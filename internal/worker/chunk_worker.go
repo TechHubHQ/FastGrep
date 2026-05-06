@@ -7,11 +7,11 @@ import (
 )
 
 type ChunkWorkerPool struct {
-	ChunkChan chan *search.SearchJob
-	ErrorChan chan error
-	LogFile *os.File
+	ChunkChan  chan *search.SearchJob
+	ErrorChan  chan error
+	LogFile    *os.File
 	ResultChan chan *search.Match
-	WG *sync.WaitGroup
+	WG         *sync.WaitGroup
 	MaxWorkers int
 }
 
@@ -41,7 +41,6 @@ func (wp *ChunkWorkerPool) Stop() {
 func (wp *ChunkWorkerPool) ChunkWorker(workerID int) {
 	defer wp.WG.Done()
 	for searchJob := range wp.ChunkChan {
-		// fmt.Fprintf(wp.LogFile, "[ChunkWorker %d] Searching chunk (%d bytes)\n", workerID, len(searchJob.Data))
 		searchJob.FindMatches()
 
 		// Return the buffer to the pool

@@ -15,14 +15,14 @@ import (
 
 type FileWorkerPool struct {
 	ChunkWorkerPool *ChunkWorkerPool
-	ErrorChan chan error
-	FilesChan chan string
-	LogFile *os.File
-	ResultChan chan *search.Match
-	WG *sync.WaitGroup
-	SearchString string
-	MaxWorkers int
-	IgnoreCase bool
+	ErrorChan       chan error
+	FilesChan       chan string
+	LogFile         *os.File
+	ResultChan      chan *search.Match
+	WG              *sync.WaitGroup
+	SearchString    string
+	MaxWorkers      int
+	IgnoreCase      bool
 }
 
 func NewFileWorkerPool(maxWorkers int, searchString string, logFile *os.File, ignoreCase bool, resChan chan *search.Match, cwPool *ChunkWorkerPool) *FileWorkerPool {
